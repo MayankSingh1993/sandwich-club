@@ -81,7 +81,8 @@ public class DetailActivity extends AppCompatActivity {
         if(!alsoKnownAs.isEmpty()){
             for (String anotherName: alsoKnownAs
             ) {
-                alsoKnownAsTV.append(anotherName);
+                alsoKnownAsTV.append("\u2022  ");
+                alsoKnownAsTV.append(anotherName+"\n");
             }
 
         }else {
@@ -89,19 +90,19 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         //setting ingredients to  corresponding textview
-        List<String> ingredients=sandwich.getAlsoKnownAs();
+        List<String> ingredients=sandwich.getIngredients();
         if(!ingredients.isEmpty()){
             for (String ingredient: ingredients
             ) {
-                ingredientsTV.append(ingredient);
+                ingredientsTV.append("\u2022  ");
+                ingredientsTV.append(ingredient+"\n");
             }
-
         }else {
             ingredientsTV.setText(R.string.not_available);
         }
 
+        //setting place of origin to corresponding textview
         if(!sandwich.getPlaceOfOrigin().isEmpty()){
-            //setting place of origin to corresponding textview
             originTV.setText(sandwich.getPlaceOfOrigin());
         }else {
             originTV.setText(R.string.not_available);
