@@ -2,7 +2,9 @@ package com.udacity.sandwichclub;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+    //Using Butterknife library to bind the views
     @BindView(R.id.image_iv)
     ImageView ingredientsIV;
     @BindView(R.id.also_known_tv)
@@ -44,8 +47,9 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
         }
 
+        assert intent != null;
         int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
-        if (position == DEFAULT_POSITION)                {
+        if (position == DEFAULT_POSITION) {
             // EXTRA_POSITION not found in intent
             closeOnError();
             return;
@@ -62,7 +66,10 @@ public class DetailActivity extends AppCompatActivity {
 
         populateUI(sandwich);
         Picasso.with(this)
+                //load image
                 .load(sandwich.getImage())
+                //set error image
+                .error(R.drawable.download)
                 .into(ingredientsIV);
 
         setTitle(sandwich.getMainName());
@@ -76,43 +83,42 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Sandwich sandwich) {
 
 
-        //setting alsoKnownAs to  corresponding textview
-        List<String> alsoKnownAs=sandwich.getAlsoKnownAs();
-        if(!alsoKnownAs.isEmpty()){
-            for (String anotherName: alsoKnownAs
+        //setting alsoKnownAs to  corresponding text view
+        List<String> alsoKnownAs = sandwich.getAlsoKnownAs();
+        if (!alsoKnownAs.isEmpty()) {
+            for (String anotherName : alsoKnownAs
             ) {
                 alsoKnownAsTV.append("\u2022  ");
-                alsoKnownAsTV.append(anotherName+"\n");
+                alsoKnownAsTV.append(anotherName + "\n");
             }
 
-        }else {
+        } else {
             alsoKnownAsTV.setText(R.string.not_available);
         }
 
-        //setting ingredients to  corresponding textview
-        List<String> ingredients=sandwich.getIngredients();
-        if(!ingredients.isEmpty()){
-            for (String ingredient: ingredients
+        //setting ingredients to  corresponding text view
+        List<String> ingredients = sandwich.getIngredients();
+        if (!ingredients.isEmpty()) {
+            for (String ingredient : ingredients
             ) {
                 ingredientsTV.append("\u2022  ");
-                ingredientsTV.append(ingredient+"\n");
+                ingredientsTV.append(ingredient + "\n");
             }
-        }else {
+        } else {
             ingredientsTV.setText(R.string.not_available);
         }
 
-        //setting place of origin to corresponding textview
-        if(!sandwich.getPlaceOfOrigin().isEmpty()){
+        //setting place of origin to corresponding text view
+        if (!sandwich.getPlaceOfOrigin().isEmpty()) {
             originTV.setText(sandwich.getPlaceOfOrigin());
-        }else {
+        } else {
             originTV.setText(R.string.not_available);
         }
 
-
-        if(!sandwich.getDescription().isEmpty()){
-            //setting description to  corresponding textview
+        //setting description to  corresponding text view
+        if (!sandwich.getDescription().isEmpty()) {
             description_TV.setText(sandwich.getDescription());
-        }else {
+        } else {
             description_TV.setText(R.string.not_available);
         }
 

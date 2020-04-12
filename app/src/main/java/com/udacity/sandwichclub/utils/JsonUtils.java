@@ -11,13 +11,13 @@ import java.util.List;
 public class JsonUtils {
 
     public static Sandwich parseSandwichJson(String json) {
-        Sandwich sandwichPojoObj =null;
+        Sandwich sandwichPojoObj = null;
         try {
             //root object
-           JSONObject sandwichRootObj = new JSONObject(json);
-           //name
-           JSONObject name = sandwichRootObj.optJSONObject("name");
-           //Extract  mainName string from name
+            JSONObject sandwichRootObj = new JSONObject(json);
+            //name
+            JSONObject name = sandwichRootObj.optJSONObject("name");
+            //Extract  mainName string from name
             String mainName = name.optString("mainName");
 
 
@@ -26,12 +26,12 @@ public class JsonUtils {
             // Extract alsoKnownAs Array from name
             JSONArray alsoKnownAsArray = name.optJSONArray("alsoKnownAs");
 
-           for(int i=0;i<alsoKnownAsArray.length();i++){
-               String anotherName = alsoKnownAsArray.optString(i);
-               alsoKnownAs.add(anotherName);
+            for (int i = 0; i < alsoKnownAsArray.length(); i++) {
+                String anotherName = alsoKnownAsArray.optString(i);
+                alsoKnownAs.add(anotherName);
 
-           }
-           //Extract Place of origin
+            }
+            //Extract Place of origin
             String placeOfOrigin = sandwichRootObj.optString("placeOfOrigin");
             //Extract Description
             String description = sandwichRootObj.optString("description");
@@ -43,11 +43,11 @@ public class JsonUtils {
             List<String> ingredients = new ArrayList<>();
             // Extract ingredients Array from name
             JSONArray ingredientsArray = sandwichRootObj.optJSONArray("ingredients");
-            for(int i=0;i<ingredientsArray.length();i++){
+            for (int i = 0; i < ingredientsArray.length(); i++) {
                 String ingredient = ingredientsArray.optString(i);
                 ingredients.add(ingredient);
             }
-            sandwichPojoObj = new Sandwich(mainName,alsoKnownAs,placeOfOrigin,description,imageurl,ingredients);
+            sandwichPojoObj = new Sandwich(mainName, alsoKnownAs, placeOfOrigin, description, imageurl, ingredients);
 
 
         } catch (Exception e) {
